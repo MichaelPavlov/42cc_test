@@ -31,7 +31,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -61,7 +60,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'fortytwo_test_task.urls'
 
 WSGI_APPLICATION = 'fortytwo_test_task.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
@@ -96,7 +94,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'uploads')
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = '/uploads/'
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
@@ -119,7 +116,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'),
 )
 
-
 # Template Settings
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or
@@ -127,6 +123,7 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, 'templates'),
+    os.path.join(PROJECT_DIR, 'apps', 'hello', 'templates'),
 )
 
 # Turn off south during test
