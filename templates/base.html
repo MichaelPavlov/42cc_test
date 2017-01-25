@@ -1,22 +1,35 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>{% block title %}{% endblock title %}Site Name</title>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock title %} | Site Name</title>
 
-        <meta http-equiv="X-UA-Compatible" content="chrome=IE7" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=IE7"/>
 
-        <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
-        <meta name="apple-mobile-web-app-capable" content="yes"/>
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 
-        <link rel="stylesheet" href="{% static 'css/screen.css' %}" media="screen, projection"/>
+    <link rel="stylesheet" href="{% static 'css/screen.css' %}" media="screen, projection"/>
 
-        {% block extra_head %}{% endblock extra_head %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    </head>
-    <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
-        {% block content %}{% endblock content %}
-    </body>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    {% block extra_head %}{% endblock extra_head %}
+
+</head>
+<body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
+{% block content %}{% endblock content %}
+</body>
 </html>
