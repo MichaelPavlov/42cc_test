@@ -1,1 +1,2 @@
-# Create your views here.
+def contact_page(request):
+    pass
