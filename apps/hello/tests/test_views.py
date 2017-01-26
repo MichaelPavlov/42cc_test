@@ -24,7 +24,6 @@ class ContactViewTestCase(TestCase):
             email="mihpavlov@gmail.com",
             first_name="Michael",
             last_name="Pavlov",
-
         )
         cls.profile = Profile.objects.create(
             user=cls.user,
