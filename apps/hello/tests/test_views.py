@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from datetime import date
 
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import resolve, reverse_lazy
@@ -7,34 +6,12 @@ from django.template.loader import render_to_string
 from django.test import RequestFactory
 from django.test import TestCase
 
-from apps.hello.models import Profile
 from apps.hello.views import contact_page
 
 User = get_user_model()
 
 
 class ContactViewTestCase(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        super(ContactViewTestCase, cls).setUpClass()
-
-        User.objects.all().delete()
-        Profile.objects.all().delete()
-
-        cls.user = User.objects.create(
-            username='mirak',
-            email="mihpavlov@gmail.com",
-            first_name="Michael",
-            last_name="Pavlov",
-        )
-        cls.profile = Profile.objects.create(
-            user=cls.user,
-            bio="Brief bio...",
-            birth_date=date(1984, 10, 12),
-            jabber='mirak@xmpp.pro',
-            skype='mihpavlov',
-        )
-
     def setUp(self):
         self.factory = RequestFactory()
 
