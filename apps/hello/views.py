@@ -1,7 +1,5 @@
 from django.shortcuts import render
 
-from apps.hello.models import Profile
-
 
 def contact_page(request):
     """
