@@ -9,17 +9,7 @@ def contact_page(request):
     :param request:
     :return:
     """
-
-    # Here we get first object as it would be the only one in database, since
-    # this is a demo project. If there were listing we would implement
-    # filtering with request parameter
-
-    profile = Profile.objects.get(pk=1)
-
-    context = {
-        'profile': profile,
-    }
-    return render(request, "hello/contact.html", context)
+    return render(request, "hello/contact.html", {})
 
 
 def contact_page_hardcoded(request):
