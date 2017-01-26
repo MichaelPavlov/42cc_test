@@ -57,6 +57,7 @@ class ContactViewTestCase(TestCase):
         """
         Test for correct data in response of contact_page view
         """
+        check = 1
         url = reverse_lazy("contact")
         request = self.factory.get(url)
         response = contact_page(request)
