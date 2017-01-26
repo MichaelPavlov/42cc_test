@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from datetime import date
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import resolve, reverse_lazy
 from django.template.loader import render_to_string
