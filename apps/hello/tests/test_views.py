@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 from datetime import date
 
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import resolve, reverse_lazy
+from django.template.loader import render_to_string
 from django.test import RequestFactory
 from django.test import TestCase
 
@@ -60,11 +62,5 @@ class ContactViewTestCase(TestCase):
         url = reverse_lazy("contact")
         request = self.factory.get(url)
         response = contact_page(request)
-        self.assertIn(b'<p><strong>Name:</strong> Michael</p>',
-                      response.content)
-        self.assertIn(b'<p><strong>Last name:</strong> Pavlov</p>',
-                      response.content)
-        self.assertIn(b'<p><strong>Email:</strong> mihpavlov@gmail.com</p>',
-                      response.content)
-        self.assertIn(b'<p><strong>Jabber:</strong> mirak@xmpp.pro</p>',
-                      response.content)
+        expected_html = render_to_string("hello/contact.html")
+        self.assertEqual(response.content.decode("utf-8"), expected_html)
