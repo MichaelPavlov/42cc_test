@@ -15,10 +15,7 @@ def contact_page(request):
     # filtering with request parameter
 
     profile = Profile.objects.get(pk=1)
-
-    context = {
-        'profile': profile,
-    }
+    context = {'profile': profile}
     return render(request, "hello/contact.html", context)
 
 
