@@ -16,8 +16,16 @@ syncdb:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) syncdb --noinput
 
 migrate:
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) migrate hello --delete-ghost-migrations
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) migrate
 
 collectstatic:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) collectstatic --noinput
+
+custom:
+    bash ls
+
+all:
+    cd some_dir; echo "I'm in some_dir"; \
+          gcc -Wall -o myTest myTest.c
+
 .PHONY: test syncdb migrate
