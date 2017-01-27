@@ -1,11 +1,19 @@
 # -*- coding: utf-8 -*-
-from django.core.management import call_command
-from south.v2 import DataMigration
 
-from utils.fixture import southern_models
+from south.v2 import DataMigration
 
 
 class Migration(DataMigration):
     def forwards(self, orm):
-        with southern_models(orm):
-            call_command("loaddata", "my_fixture.json")
+        import os.path
+        from django.conf import settings
+        from django.core.management import call_command
+        fixture = os.path.join(settings.PROJECT_ROOT,
+                               'apps/hello/fixtures/test_list.json')
+        call_command("loaddata", fixture)
+
+    def backwards(self, orm):
+        "Write your backwards methods here."
+
+
+complete_apps = ['hello']
