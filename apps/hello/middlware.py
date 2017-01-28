@@ -15,6 +15,6 @@ class RequestCaptureMiddlware(object):
         if x_forwarded_for:
             ip = x_forwarded_for.split(',')[0]
         else:
-            ip = request.META.get(
-                'REMOTE_ADDR')  ### Real IP address of client Machine
+            # Real IP address of client Machine
+            ip = request.META.get('REMOTE_ADDR')
         return ip
