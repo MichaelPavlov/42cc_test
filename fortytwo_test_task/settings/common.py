@@ -43,6 +43,7 @@ INSTALLED_APPS = (
 
     # local apps
     'apps.hello',
+    'apps.hardcoded',
 
     # third party apps
     'south'
