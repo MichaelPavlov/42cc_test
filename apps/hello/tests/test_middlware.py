@@ -1,7 +1,7 @@
-from apps.hello.middlware import RequestCaptureMiddlware
 from django.test import RequestFactory
 from django.test import TestCase
 
+from apps.hello.middlware import RequestCaptureMiddlware
 from apps.hello.models import RequestStamp
 
 
@@ -13,7 +13,8 @@ class RequestCaptureMiddlwareTestCase(TestCase):
 
     def test_basic_capture_request(self):
         """
-        Test that RequestCaptureMiddlware captures requests to RequestStamp model
+        Test that RequestCaptureMiddlware captures requests to
+        RequestStamp model
         """
         url = "/"
         request = self.factory.get(url)
