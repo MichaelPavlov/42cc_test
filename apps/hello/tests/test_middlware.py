@@ -11,7 +11,7 @@ class RequestCaptureMiddlwareTestCase(TestCase):
         cls.factory = RequestFactory()
         cls.rc_middlware = RequestCaptureMiddlware()
 
-    def test_capture_request(self):
+    def test_basic_capture_request(self):
         """
         Test that RequestCaptureMiddlware captures requests to RequestStamp model
         """

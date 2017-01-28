@@ -15,3 +15,7 @@ class Profile(Model):
 
     def __unicode__(self):
         return "%s's profile" % self.user.username
+
+
+class RequestStamp(Model):
+    pass
