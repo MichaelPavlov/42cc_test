@@ -21,7 +21,4 @@ migrate:
 collectstatic:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) collectstatic --noinput
 
-all:
-	cd some_dir; echo "I'm in some_dir";
-
 .PHONY: test syncdb migrate
