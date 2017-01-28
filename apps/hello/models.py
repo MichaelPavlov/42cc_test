@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
-from django.db.models import Model, DateField, TextField, EmailField, CharField
+from django.db.models import Model, DateField, TextField, EmailField, \
+    CharField, GenericIPAddressField
+
 from django.db.models import OneToOneField
 
 User = get_user_model()
@@ -18,4 +20,6 @@ class Profile(Model):
 
 
 class RequestStamp(Model):
-    pass
+    method = CharField(max_length=5)
+    path = CharField(max_length=256)
+    ip = GenericIPAddressField()

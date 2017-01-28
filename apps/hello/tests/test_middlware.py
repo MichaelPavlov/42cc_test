@@ -23,3 +23,12 @@ class RequestCaptureMiddlwareTestCase(TestCase):
         models_after = RequestStamp.objects.count()
 
         self.assertNotEqual(models_after, models_before)
+
+    def test_middlware_with_client(self):
+        """
+        Test that request sent with client capturing to RequestStamp model
+        """
+        url = "/random/page/for/testing/with/client/"
+        self.client.put(url)
+        latest_request_stamp = RequestStamp.objects.latest('id')
+        self.assertEqual(latest_request_stamp.method, "PUT")
