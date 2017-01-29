@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db.models import Model, DateField, TextField, EmailField, \
-    CharField, GenericIPAddressField
+    CharField, GenericIPAddressField, BooleanField
 
 from django.db.models import OneToOneField
 
@@ -23,3 +23,4 @@ class RequestStamp(Model):
     method = CharField(max_length=5)
     path = CharField(max_length=256)
     ip = GenericIPAddressField()
+    new = BooleanField(default=True)
