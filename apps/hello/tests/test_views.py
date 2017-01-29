@@ -2,13 +2,14 @@
 from datetime import date
 
 from django.contrib.auth import get_user_model
+from django.core import serializers
 from django.core.urlresolvers import resolve, reverse_lazy
 from django.template.loader import render_to_string
 from django.test import RequestFactory
 from django.test import TestCase
 
-from apps.hello.models import Profile
-from apps.hello.views import contact_page
+from apps.hello.models import Profile, RequestStamp
+from apps.hello.views import contact_page, request_stamps_view
 
 User = get_user_model()
 
@@ -36,8 +37,7 @@ class ContactViewTestCase(TestCase):
             skype='mihpavlov',
         )
 
-    def setUp(self):
-        self.factory = RequestFactory()
+        cls.factory = RequestFactory()
 
     def test_resolve_url_for_contact_page(self):
         """
@@ -67,3 +67,69 @@ class ContactViewTestCase(TestCase):
         expected_html = render_to_string("hello/contact.html",
                                          dictionary=context)
         self.assertEqual(response.content.decode("utf-8"), expected_html)
+
+
+class RequestStampsViewTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super(RequestStampsViewTestCase, cls).setUpClass()
+
+        RequestStamp.objects.all().delete()
+
+        cls.request_stamps = [
+            {
+                "id": 1,
+                "method": "PATCH",
+                "path": "/test/path/url/1/",
+                "ip": "192.168.0.1",
+                "new": False
+            },
+            {
+                "id": 2,
+                "method": "GET",
+                "path": "/test/path/url/2/",
+                "ip": "192.168.0.2",
+                "new": True
+            },
+            {
+                "id": 3,
+                "method": "POST",
+                "path": "/test/path/url/3/",
+                "ip": "192.168.0.3",
+                "new": True
+            },
+        ]
+
+        RequestStamp.objects.bulk_create(
+            [RequestStamp(**vals) for vals in cls.request_stamps]
+        )
+
+        cls.factory = RequestFactory()
+
+    def test_resolve_url_for_request_stamp_view(self):
+        """
+        Test that request stamp view resolves by right url
+        """
+        resolver = resolve("/api/request_stamps/")
+        self.assertEqual(resolver.func, request_stamps_view)
+
+    def test_request_stamps_view_basic(self):
+        """
+        Test that request stamps view returns a 200 response
+        """
+        url = reverse_lazy("request-stamps")
+        request = self.factory.get(url)
+
+        response = request_stamps_view(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_request_stamp_url_returns_correct_data(self):
+        """
+        Test that client can get correct data accessing stamp url
+        """
+        qs = RequestStamp.objects.filter(new=True)
+        json = serializers.serialize("json", qs)
+
+        url = reverse_lazy("request-stamps")
+        response = self.client.get(url)
+        self.assertEqual(response, json)

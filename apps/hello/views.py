@@ -19,5 +19,5 @@ def contact_page(request):
     return render(request, "hello/contact.html", context)
 
 
-def contact_page_hardcoded(request):
-    return render(request, "hello/contacts_hardcoded.html", {})
+def request_stamps_view():
+    pass
