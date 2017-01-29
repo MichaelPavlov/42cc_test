@@ -22,7 +22,6 @@ def contact_page(request):
 
 
 def request_stamps_view(request):
-
     qs = RequestStamp.objects.filter(new=True)
     json = serializers.serialize("json", qs)
     return HttpResponse(json, content_type="application/json")

@@ -110,7 +110,7 @@ class RequestStampsViewTestCase(TestCase):
         """
         Test that request stamp view resolves by right url
         """
-        resolver = resolve("/api/request_stamps/")
+        resolver = resolve("/api/request-stamps/")
         self.assertEqual(resolver.func, request_stamps_view)
 
     def test_request_stamps_view_basic(self):
