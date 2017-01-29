@@ -32,3 +32,14 @@ class RequestCaptureMiddlwareTestCase(TestCase):
         self.client.put(url)
         latest_request_stamp = RequestStamp.objects.latest('id')
         self.assertEqual(latest_request_stamp.method, "PUT")
+
+    def test_middlware_does_not_save_ajax_requests(self):
+        """
+        Test that middlware does not save ajax requests
+        """
+        url = "/random/page/for/testing/with/client/"
+        models_before = RequestStamp.objects.count()
+        self.client.get(url, **{
+            'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'})
+        models_after = RequestStamp.objects.count()
+        self.assertEqual(models_after, models_before)

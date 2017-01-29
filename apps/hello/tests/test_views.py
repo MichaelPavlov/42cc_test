@@ -131,5 +131,6 @@ class RequestStampsViewTestCase(TestCase):
         json = serializers.serialize("json", qs)
 
         url = reverse_lazy("request-stamps")
-        response = self.client.get(url)
-        self.assertEqual(response, json)
+        response = self.client.get(url, **{
+            'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'})
+        self.assertJSONEqual(response.content, json)

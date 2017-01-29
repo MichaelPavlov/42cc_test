@@ -1,6 +1,8 @@
+from django.core import serializers
+from django.http import HttpResponse
 from django.shortcuts import render
 
-from apps.hello.models import Profile
+from apps.hello.models import Profile, RequestStamp
 
 
 def contact_page(request):
@@ -19,5 +21,8 @@ def contact_page(request):
     return render(request, "hello/contact.html", context)
 
 
-def request_stamps_view():
-    pass
+def request_stamps_view(request):
+
+    qs = RequestStamp.objects.filter(new=True)
+    json = serializers.serialize("json", qs)
+    return HttpResponse(json, content_type="application/json")
