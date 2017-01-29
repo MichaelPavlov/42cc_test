@@ -3,6 +3,8 @@ from apps.hello.models import RequestStamp
 
 class RequestCaptureMiddlware(object):
     def process_request(self, request):
+        if request.is_ajax():
+            return
         RequestStamp.objects.create(
             method=request.method,
             path=request.path,
