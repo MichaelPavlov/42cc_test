@@ -52,7 +52,7 @@ class ContactViewTestCase(TestCase):
         """
         url = reverse_lazy("contact")
         request = self.factory.get(url)
-        with self.assertTemplateUsed('hello/contact.html'):
+        with self.assertTemplateUsed('hello/front_page.html'):
             response = contact_page(request)
             self.assertEqual(response.status_code, 200)
 
@@ -64,7 +64,7 @@ class ContactViewTestCase(TestCase):
         request = self.factory.get(url)
         response = contact_page(request)
         context = {'profile': self.profile}
-        expected_html = render_to_string("hello/contact.html",
+        expected_html = render_to_string("hello/front_page.html",
                                          dictionary=context)
         self.assertEqual(response.content.decode("utf-8"), expected_html)
 
@@ -127,7 +127,7 @@ class RequestStampsViewTestCase(TestCase):
         """
         Test that client can get correct data accessing stamp url
         """
-        qs = RequestStamp.objects.filter(new=True)
+        qs = RequestStamp.objects.all().order_by('-id')[:10]
         json = serializers.serialize("json", qs)
 
         url = reverse_lazy("request-stamps")
