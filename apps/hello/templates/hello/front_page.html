@@ -39,7 +39,7 @@
         <br/>
         <div class="row">
             <h2>Requests</h2>
-            <button id="load-more">Load More</button>
+            {#            <button id="load-more">Load More</button>#}
         </div>
         <table class="table table-condensed">
             <thead>
@@ -72,9 +72,9 @@
                 ajax("get", requestsStampsUrl, {}, renderRequestStamps)
             }, 1500);
 
-            $("#load-more").click(function () {
-                ajax("get", requestsStampsUrl, {}, renderRequestStamps);
-            });
+            {#            $("#load-more").click(function () {#}
+            {#                ajax("get", requestsStampsUrl, {}, renderRequestStamps);#}
+            {#            });#}
 
             {#            $(".requests-table").show(function () {#}
             {#                console.log("Table is visible")#}
