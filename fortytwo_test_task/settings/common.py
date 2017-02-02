@@ -130,3 +130,6 @@ TEMPLATE_DIRS = (
 
 # Turn off south during test
 SOUTH_TESTS_MIGRATE = False
+
+
+CSRF_COOKIE_NAME = "csrf_token"
