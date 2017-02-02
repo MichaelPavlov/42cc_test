@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.conf.urls import patterns, include, url
+from django.conf.urls.static import static
 from django.contrib import admin
 
 from apps.hardcoded import urls as hardcoded_urls
@@ -20,3 +22,7 @@ urlpatterns = patterns(
     url(r'^api/request-stamps-set-read/$', request_stamps_set_read_view,
         name="request-stamps-set-read"),
 )
+
+if settings.DEBUG:
+    urlpatterns += (
+        static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))
