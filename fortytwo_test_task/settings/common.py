@@ -43,6 +43,7 @@ INSTALLED_APPS = (
 
     # local apps
     'apps.hello',
+    'apps.hardcoded',
 
     # third party apps
     'south'
@@ -55,6 +56,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apps.hello.middlware.RequestCaptureMiddlware',
 )
 
 ROOT_URLCONF = 'fortytwo_test_task.urls'
@@ -128,3 +130,6 @@ TEMPLATE_DIRS = (
 
 # Turn off south during test
 SOUTH_TESTS_MIGRATE = False
+
+
+CSRF_COOKIE_NAME = "csrf_token"

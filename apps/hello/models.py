@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
-from django.db.models import Model, DateField, TextField, EmailField, CharField
+from django.db.models import Model, DateField, TextField, EmailField, \
+    CharField, GenericIPAddressField, BooleanField
+
 from django.db.models import OneToOneField
 
 User = get_user_model()
@@ -15,3 +17,10 @@ class Profile(Model):
 
     def __unicode__(self):
         return "%s's profile" % self.user.username
+
+
+class RequestStamp(Model):
+    method = CharField(max_length=5)
+    path = CharField(max_length=256)
+    ip = GenericIPAddressField()
+    new = BooleanField(default=True)

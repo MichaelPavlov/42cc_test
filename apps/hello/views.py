@@ -1,6 +1,9 @@
+from django.core import serializers
+from django.http import HttpResponse
+from django.http import HttpResponseForbidden
 from django.shortcuts import render
 
-from apps.hello.models import Profile
+from apps.hello.models import Profile, RequestStamp
 
 
 def contact_page(request):
@@ -16,8 +19,26 @@ def contact_page(request):
 
     profile = Profile.objects.get(pk=1)
     context = {'profile': profile}
-    return render(request, "hello/contact.html", context)
+    return render(request, "hello/front_page.html", context)
 
 
-def contact_page_hardcoded(request):
-    return render(request, "hello/contacts_hardcoded.html", {})
+def request_stamps_view(request):
+    qs = RequestStamp.objects.all().order_by('-id')[:10]
+    json = serializers.serialize("json", qs)
+    return HttpResponse(json, content_type="application/json")
+
+
+def request_stamps_set_read_view(request):
+    if request.method == "POST" and request.is_ajax():
+        try:
+            stamps = request.POST.getlist('requests[]', [])
+            qs = RequestStamp.objects.filter(id__in=stamps)
+
+            qs.update(new=False)
+            pass
+        except Exception as err:
+            print err
+
+        return HttpResponse("OK")
+
+    return HttpResponseForbidden()

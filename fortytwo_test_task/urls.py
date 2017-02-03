@@ -1,7 +1,11 @@
+from django.conf import settings
 from django.conf.urls import patterns, include, url
+from django.conf.urls.static import static
 from django.contrib import admin
 
-from apps.hello.views import contact_page, contact_page_hardcoded
+from apps.hardcoded import urls as hardcoded_urls
+from apps.hello.views import contact_page, request_stamps_view, \
+    request_stamps_set_read_view
 
 admin.autodiscover()
 
@@ -12,6 +16,13 @@ urlpatterns = patterns(
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^hardcoded/', include(hardcoded_urls, namespace="hardcoded")),
     url(r'^$', contact_page, name="contact"),
-    url(r'^contacts_hardcoded/$', contact_page_hardcoded, name="contact"),
+    url(r'^api/request-stamps/$', request_stamps_view, name="request-stamps"),
+    url(r'^api/request-stamps-set-read/$', request_stamps_set_read_view,
+        name="request-stamps-set-read"),
 )
+
+if settings.DEBUG:
+    urlpatterns += (
+        static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Personal info for user {{ profile.user.username }}{% endblock %}
+{% block extra_head %}
+    <script src="{% static "js/in-view.min.js" %}"></script>
+{% endblock extra_head %}
+
+{% block content %}
+    <div class="container">
+        <h1>42 Coffee Cups Test Assignment</h1>
+        <br/>
+        <br/>
+        <br/>
+        <h2>Developer personal information</h2>
+        <br/>
+        <br/>
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <p><strong>Name:</strong> {{ profile.user.first_name }}</p>
+                <p><strong>Last name:</strong> {{ profile.user.last_name }}</p>
+                <p><strong>Date of birth:</strong> {{ profile.birth_date }}</p>
+                <p>
+                    <strong>Brief bio:</strong> {{ profile.bio }}
+                </p>
+            </div>
+            <div class="col-sm-4 col-sm-offset-1">
+                <h3>Contacts</h3>
+                <p><strong>Email:</strong> {{ profile.user.email }}</p>
+                <p><strong>Jabber:</strong> {{ profile.jabber }}</p>
+                <p><strong>Skype:</strong> {{ profile.skype }}</p>
+                <h3>Other contacts</h3>
+                <p>{{ profile.other_contacts|safe }}</p>
+            </div>
+        </div>
+        <hr class="divider">
+        <br/>
+        <br/>
+        <br/>
+        <div class="row">
+            <h2>Requests</h2>
+            {#            <button id="load-more">Load More</button>#}
+        </div>
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Path</th>
+                <th>Method</th>
+                <th>IP</th>
+            </tr>
+            </thead>
+            <tbody id="requests-table"></tbody>
+        </table>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </div>
+    {% csrf_token %}
+    <script src="{% static "js/functions.js" %}"></script>
+    <script>
+        var requestsStampsUrl = '{% url 'request-stamps' %}';
+        var markRequestsReadUrl = '{% url 'request-stamps-set-read' %}';
+
+        $(function () {
+            ajax("get", requestsStampsUrl, {}, renderRequestStamps);
+            setInterval(function () {
+                ajax("get", requestsStampsUrl, {}, renderRequestStamps)
+            }, 1500);
+
+            {#            $("#load-more").click(function () {#}
+            {#                ajax("get", requestsStampsUrl, {}, renderRequestStamps);#}
+            {#            });#}
+
+            {#            $(".requests-table").show(function () {#}
+            {#                console.log("Table is visible")#}
+            {#            });#}
+
+            $(window).focus(function () {
+                if (inView.is($('#requests-table'))) {
+                    console.log("Table is in view on tab focus");
+                }
+            });
+            inView('#requests-table').on('enter', function () {
+                if (!window.cachedStamps) return;
+                markRequestsAsRead();
+            })
+        });
+
+
+    </script>
+{% endblock %}
