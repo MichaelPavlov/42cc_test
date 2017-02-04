@@ -18,8 +18,6 @@ function csrfSafeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 
-
-
 function renderRequestStamps(data) {
     var currentStampIDs = [];
     var tableContents;
@@ -45,6 +43,13 @@ function renderRequestStamps(data) {
     if (!arraysEqual(window.cachedStamps, currentStampIDs)) {
         $("#requests-table").html(tableContents);
         window.cachedStamps = currentStampIDs;
+    }
+}
+
+
+function submitContactEditForm() {
+    data = {
+
     }
 }
 
@@ -87,7 +92,6 @@ function ajax(method, url, data, success) {
         }
     })
 }
-
 
 var csrftoken = getCookie('csrf_token');
 $.ajaxSetup({
