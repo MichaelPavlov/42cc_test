@@ -1,3 +1,23 @@
+function showLoadingScreen() {
+    $("body").append("<div class='loading-overlay'><div class='loader'></div></div>");
+}
+
+function hideLoadingScreen() {
+    $(".loading-overlay").remove()
+}
+
+function disableForm() {
+    $("#contact-edit-form").find(":input").each(function () {
+        $(this).attr('disabled', 'disabled');
+    });
+}
+
+function enableForm() {
+    $("#contact-edit-form").find(":input").each(function () {
+        $(this).removeAttr('disabled');
+    });
+}
+
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
@@ -48,9 +68,31 @@ function renderRequestStamps(data) {
 
 
 function submitContactEditForm() {
+    $("#contact-edit-form").submit()
     data = {
+        "first_name": $("#first_name"),
+        "last_name": $("#v"),
+        "birth_date": $("#birth_date"),
+        "photo": $("#photo"),
+        "email": $("#email"),
+        "jabber": $("#jabber"),
+        "skype": $("#skype"),
+        "other_contacts": $("#other_contacts"),
+        "bio": $("#bio")
+    };
 
-    }
+    $.ajax({
+        'method': "post",
+        'url': editContactSubmitURL,
+        'data': data,
+        'success': function (data) {
+            console.log(data)
+        },
+        'error': function (err) {
+//            console.log(method, url, err);
+            console.log(err.responseText);
+        }
+    })
 }
 
 function markRequestsAsRead() {

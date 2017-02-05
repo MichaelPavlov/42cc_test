@@ -16,7 +16,8 @@
         <br/>
         <br/>
 
-        <form class="form-horizontal" method="post" action="">
+        <form class="form-horizontal" method="post" action="" id="contact-edit-form">
+            {% csrf_token %}
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-1">
                     {#                    <div class="col-sm-6">#}
@@ -37,7 +38,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="birth_date"><strong>Date of birth:</strong></label>
                         <div class="col-sm-8">
-                            <input class="form-control" type="text" id="birth_date">
+                            <input class="form-control" type="date" id="birth_date">
                         </div>
                     </div>
                     <div class="form-group">
@@ -56,30 +57,30 @@
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="email"><strong>Email:</strong></label>
                         <div class="col-sm-8">
-                            <input class="form-control" type="text" id="email">
+                            <input class="form-control" type="email" id="email">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-4" for="email"><strong>Jabber:</strong></label>
+                        <label class="control-label col-sm-4" for="jabber"><strong>Jabber:</strong></label>
                         <div class="col-sm-8">
-                            <input class="form-control" type="text" id="email">
+                            <input class="form-control" type="text" id="jabber">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-4" for="email"><strong>Skype:</strong></label>
+                        <label class="control-label col-sm-4" for="skype"><strong>Skype:</strong></label>
                         <div class="col-sm-8">
-                            <input class="form-control" type="text" id="email">
+                            <input class="form-control" type="text" id="skype">
                         </div>
                     </div>
                     <h3>Other contacts</h3>
-                    <textarea class="form-control" id="other_contacts" title="Other contacts" rows="15">
+                    <textarea class="form-control" id="other_contacts" title="Other contacts" rows="15"></textarea>
 
-                    </textarea>
                     <h3>Bio</h3>
-                    <textarea class="form-control" id="bio" title="Brief bio" rows="15">
-
-                    </textarea>
+                    <textarea class="form-control" id="bio" title="Brief bio" rows="15"></textarea>
                 </div>
+            </div>
+            <div class="row">
+                <button type="submit" value="Submit" id="btn-submit-form">Submit</button>
             </div>
         </form>
         <hr class="divider">
@@ -108,13 +109,44 @@
         <br/>
         <br/>
     </div>
-    {% csrf_token %}
+
+    {#    <div class="load-indicator">#}
+    {#        <div class="loader">Loading...</div>#}
+    {#    </div>#}
+
     <script src="{% static "js/functions.js" %}"></script>
     <script>
+        var editContactSubmitURL = "{% url "hardcoded:edit-contact" %}";
         $(function () {
+            $("#btn-submit-form").click(function (event) {
+                event.preventDefault();
+                var form = $("#contact-edit-form");
 
+                var data = new FormData(form[0]);
+
+                disableForm();
+                showLoadingScreen();
+
+                $.ajax({
+                    method: "POST",
+                    enctype: "multipart/form-data",
+                    url: editContactSubmitURL,
+                    data: data,
+                    processData: false,
+                    success: function (data) {
+                        hideLoadingScreen();
+                        enableForm();
+                        console.log(data)
+                    },
+
+                    error: function (error) {
+                        hideLoadingScreen();
+                        enableForm();
+                        console.log(error)
+                    }
+                })
+            })
         });
-
-
     </script>
+
 {% endblock %}
