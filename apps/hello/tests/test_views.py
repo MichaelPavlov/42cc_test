@@ -9,7 +9,9 @@ from django.test import RequestFactory
 from django.test import TestCase
 
 from apps.hello.models import Profile, RequestStamp
-from apps.hello.views import contact_page, request_stamps_view
+from apps.hello.tests.base import RegistrationTestCase
+from apps.hello.views import contact_page, request_stamps_view, \
+    user_register_view
 
 User = get_user_model()
 
@@ -134,3 +136,55 @@ class RequestStampsViewTestCase(TestCase):
         response = self.client.get(url, **{
             'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'})
         self.assertJSONEqual(response.content, json)
+
+
+class UserRegisterViewTestCase(RegistrationTestCase):
+    @classmethod
+    def setUpClass(cls):
+        super(UserRegisterViewTestCase, cls).setUpClass()
+        cls.url = reverse_lazy("register")
+
+    def test_resolve_url_for_user_register_view(self):
+        """
+        Test that user register view resolves by right url
+        """
+        resolver = resolve("register")
+        self.assertEqual(resolver.func, user_register_view)
+
+    def test_user_register_view_basic(self):
+        """
+        Test that user register view returns 200 response
+        """
+        request = self.factory.get(self.url)
+        response = user_register_view(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_register_view_registers_user(self):
+        """
+        Test that view actually registers user
+        """
+        data = {
+            "username": "foo",
+            "email": "inbox@example.co",
+            "password1": "foo",
+            "password2": "foo",
+        }
+        response = self.client.post(self.url, data)
+        qs = User.objects.get(username="foo")
+        self.assertTrue(qs.exists())
+        self.assertEqual(response.status_code, 302)
+
+    def test_user_register_view_fails_on_invalid_submission(self):
+        """
+        Test fail on invalid submission
+        """
+        data = {
+            "username": "mirak",  # will fail on username uniquness
+            "email": "inbox@example.co",
+            "password1": "foo",
+            "password2": "foo",
+        }
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNotNone(response.context["form"])
+        self.assertIsNotNone(response.context["form"].errors)

@@ -33,7 +33,6 @@ def request_stamps_set_read_view(request):
         try:
             stamps = request.POST.getlist('requests[]', [])
             qs = RequestStamp.objects.filter(id__in=stamps)
-
             qs.update(new=False)
             pass
         except Exception as err:
@@ -42,3 +41,7 @@ def request_stamps_set_read_view(request):
         return HttpResponse("OK")
 
     return HttpResponseForbidden()
+
+
+def user_register_view(request):
+    return render(request, "registration/register.html", {})

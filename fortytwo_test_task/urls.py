@@ -5,8 +5,7 @@ from django.contrib import admin
 
 from apps.hardcoded import urls as hardcoded_urls
 from apps.hello.views import contact_page, request_stamps_view, \
-    request_stamps_set_read_view
-from utils.views import user_register_view
+    request_stamps_set_read_view, user_register_view
 
 admin.autodiscover()
 
